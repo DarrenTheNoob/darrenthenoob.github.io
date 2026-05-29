@@ -458,15 +458,15 @@
         </div>
       </li>
 
-      <li class="work-item reveal" data-href="#">
+      <li class="work-item reveal" data-href="https://www.singaporegreenfinance.com/sgfc-research/opinion-the-market-for-biodiversity-in-singapore/" data-external="true">
         <span class="work-num">(03)</span>
         <div class="work-info">
-          <p class="work-title">Coming Soon</p>
-          <p class="work-desc">ESG analysis — Sustainability stewardship framework</p>
+          <p class="work-title">The Market for Biodiversity in Singapore ↗</p>
+          <p class="work-desc">Opinion — Singapore Green Finance Centre · May 2025</p>
         </div>
         <div class="work-tags">
-          <span class="tag">Sustainability</span>
-          <span class="tag">Green Finance</span>
+          <span class="tag">ESG</span>
+          <span class="tag">Nature-Based Solutions</span>
         </div>
       </li>
 
@@ -533,7 +533,9 @@
     document.querySelectorAll('.work-item[data-href]').forEach(item => {
       item.addEventListener('click', () => {
         const href = item.dataset.href;
-        if (href && href !== '#') window.location.href = href;
+        if (href && href !== '#') {
+          item.dataset.external ? window.open(href, '_blank') : window.location.href = href;
+        }
       });
     });
 

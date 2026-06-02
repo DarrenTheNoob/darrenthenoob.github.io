@@ -1,0 +1,617 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Philadelphia OLS — Darren Marcus Loo</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg:        #0e0e0c;
+      --surface:   #161614;
+      --border:    #242420;
+      --text:      #e8e3d8;
+      --muted:     #6b6860;
+      --accent:    #3a8c5c;
+      --font-display: 'Syne', sans-serif;
+      --font-body:    'DM Sans', sans-serif;
+      --font-mono:    'DM Mono', monospace;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--font-body);
+      font-size: 16px;
+      line-height: 1.6;
+      min-height: 100vh;
+    }
+    a { color: inherit; text-decoration: none; }
+    img { display: block; max-width: 100%; }
+
+    /* ── Nav ── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1.25rem 2.5rem;
+      background: rgba(14,14,12,0.85);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-back {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      font-family: var(--font-mono);
+      font-size: 0.78rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--muted);
+      transition: color 0.2s;
+    }
+    .nav-back:hover { color: var(--text); }
+    .nav-right {
+      display: flex;
+      align-items: center;
+      gap: 2rem;
+    }
+    .nav-logo {
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: 0.95rem;
+      letter-spacing: 0.04em;
+    }
+    .nav-logo span { color: var(--accent); }
+    .nav-pdf {
+      font-family: var(--font-mono);
+      font-size: 0.78rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--muted);
+      transition: color 0.2s;
+    }
+    .nav-pdf:hover { color: var(--text); }
+
+    /* ── Hero ── */
+    .hero {
+      padding: 10rem 2.5rem 5rem;
+      max-width: 860px;
+    }
+    .hero-eyebrow {
+      font-family: var(--font-mono);
+      font-size: 0.78rem;
+      color: var(--accent);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-bottom: 1.5rem;
+    }
+    .hero-title {
+      font-family: var(--font-display);
+      font-size: clamp(2rem, 5vw, 3.5rem);
+      font-weight: 800;
+      line-height: 1.05;
+      letter-spacing: -0.02em;
+      color: var(--text);
+      margin-bottom: 1.5rem;
+    }
+    .hero-sub {
+      font-size: 1rem;
+      font-weight: 300;
+      color: var(--muted);
+      max-width: 560px;
+      line-height: 1.7;
+      margin-bottom: 2.5rem;
+    }
+    .hero-sub em { color: var(--text); font-style: normal; }
+    .hero-meta {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 1.5rem;
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      color: var(--muted);
+      letter-spacing: 0.06em;
+    }
+    .hero-meta span::before {
+      content: '·';
+      margin-right: 1.5rem;
+      color: var(--border);
+    }
+    .hero-meta span:first-child::before { display: none; }
+
+    /* ── Section base ── */
+    section {
+      padding: 4rem 2.5rem;
+      border-top: 1px solid var(--border);
+    }
+    .section-label {
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      color: var(--accent);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      margin-bottom: 2.5rem;
+    }
+
+    /* ── Overview ── */
+    .prose p {
+      font-size: 0.975rem;
+      font-weight: 300;
+      color: var(--muted);
+      line-height: 1.85;
+      max-width: 720px;
+      margin-bottom: 1.1rem;
+    }
+    .prose p:last-child { margin-bottom: 0; }
+    .prose p em { color: var(--text); font-style: normal; }
+
+    /* ── Model ── */
+    .equation-block {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 1.5rem 2rem;
+      font-family: var(--font-mono);
+      font-size: clamp(0.68rem, 1.4vw, 0.82rem);
+      color: var(--text);
+      letter-spacing: 0.02em;
+      line-height: 1.6;
+      overflow-x: auto;
+      margin-bottom: 2.5rem;
+      white-space: nowrap;
+    }
+    .equation-label {
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      color: var(--muted);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-bottom: 0.75rem;
+    }
+    .stat-chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 2rem;
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      letter-spacing: 0.06em;
+    }
+    .stat-chip { display: flex; flex-direction: column; gap: 0.25rem; }
+    .stat-chip-label { color: var(--accent); font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.1em; }
+    .stat-chip-value { color: var(--text); font-size: 0.9rem; }
+
+    /* ── Findings ── */
+    .findings-list { list-style: none; }
+    .finding-item {
+      display: grid;
+      grid-template-columns: 6rem 1fr;
+      gap: 1.5rem;
+      padding: 1.5rem 0;
+      border-bottom: 1px solid var(--border);
+      align-items: start;
+    }
+    .finding-item:first-child { border-top: 1px solid var(--border); }
+    .finding-coeff {
+      font-family: var(--font-mono);
+      font-size: 0.8rem;
+      padding-top: 0.2rem;
+    }
+    .finding-coeff.pos { color: var(--accent); }
+    .finding-coeff.neg { color: #c0666a; }
+    .finding-info {}
+    .finding-title {
+      font-family: var(--font-display);
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 0.3rem;
+    }
+    .finding-desc {
+      font-size: 0.85rem;
+      font-weight: 300;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+    .finding-tag {
+      display: inline-block;
+      font-family: var(--font-mono);
+      font-size: 0.6rem;
+      color: var(--muted);
+      border: 1px solid var(--border);
+      padding: 0.15rem 0.5rem;
+      border-radius: 999px;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      margin-top: 0.5rem;
+    }
+
+    /* ── Figures ── */
+    .figures-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+    }
+    .figure-card {}
+    .figure-label {
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      color: var(--accent);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-bottom: 0.75rem;
+    }
+    .figure-img-wrap {
+      background: var(--surface);
+      border-radius: 4px;
+      padding: 0.75rem;
+      border: 1px solid var(--border);
+      overflow: hidden;
+    }
+    .figure-img-wrap img {
+      width: 100%;
+      height: auto;
+      display: block;
+      filter: invert(1);
+      mix-blend-mode: screen;
+    }
+    .figure-caption {
+      font-size: 0.78rem;
+      font-weight: 300;
+      color: var(--muted);
+      margin-top: 0.75rem;
+      line-height: 1.5;
+    }
+
+    /* ── Limitations ── */
+    .limitations-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+      max-width: 680px;
+    }
+    .limitation-item {
+      display: grid;
+      grid-template-columns: 1.5rem 1fr;
+      gap: 1rem;
+      align-items: start;
+    }
+    .limitation-num {
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      color: var(--muted);
+      padding-top: 0.2rem;
+    }
+    .limitation-text {
+      font-size: 0.9rem;
+      font-weight: 300;
+      color: var(--muted);
+      line-height: 1.7;
+    }
+    .limitation-text em { color: var(--text); font-style: normal; }
+
+    /* ── Footer ── */
+    footer {
+      padding: 2rem 2.5rem;
+      border-top: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      color: var(--muted);
+      letter-spacing: 0.06em;
+    }
+    footer a { transition: color 0.2s; }
+    footer a:hover { color: var(--text); }
+    .footer-pdf {
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--accent);
+      border-bottom: 1px solid rgba(58,140,92,0.3);
+      padding-bottom: 0.2rem;
+      transition: color 0.2s, border-color 0.2s;
+    }
+    .footer-pdf:hover { color: var(--text); border-color: var(--muted); }
+
+    /* ── Reveal ── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+    .reveal.visible { opacity: 1; transform: none; }
+
+    /* ── Responsive ── */
+    @media (max-width: 768px) {
+      nav { padding: 1rem 1.25rem; }
+      .nav-logo { display: none; }
+      .hero { padding: 7rem 1.25rem 3.5rem; }
+      section { padding: 3rem 1.25rem; }
+      .figures-grid { grid-template-columns: 1fr; }
+      .finding-item { grid-template-columns: 5rem 1fr; }
+      .equation-block { font-size: 0.62rem; padding: 1rem 1.25rem; }
+      .stat-chips { gap: 1.25rem; }
+      footer { flex-direction: column; gap: 0.75rem; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Nav -->
+  <nav>
+    <a class="nav-back" href="/home">
+      <span>←</span>
+      <span>Works</span>
+    </a>
+    <div class="nav-right">
+      <div class="nav-logo"><span>Darren</span> Marcus Loo</div>
+      <a class="nav-pdf" href="philadelphia-ols.pdf" download>Download PDF</a>
+    </div>
+  </nav>
+
+  <!-- Hero -->
+  <div class="hero">
+    <p class="hero-eyebrow">Research · Spatial Econometrics</p>
+    <h1 class="hero-title">Predicting Median House<br>Values in Philadelphia</h1>
+    <p class="hero-sub">
+      An OLS regression study modelling how <em>neighbourhood-level socioeconomic conditions</em>
+      shape residential property values across 1,720 Census block groups.
+    </p>
+    <div class="hero-meta">
+      <span>SMU · 2025</span>
+      <span>R + GeoDa</span>
+      <span>1,720 block groups</span>
+      <span>Spatial Econometrics & Data</span>
+    </div>
+  </div>
+
+  <!-- Overview -->
+  <section id="overview">
+    <p class="section-label">Overview</p>
+    <div class="prose reveal">
+      <p>
+        Residential property values are shaped by more than the physical attributes of individual
+        housing units — they reflect the broader socioeconomic character of the neighbourhoods
+        in which they sit. This study examines what drives <em>spatial variation in median house
+        values</em> across Philadelphia, Pennsylvania, using Census block group data and
+        Ordinary Least Squares regression.
+      </p>
+      <p>
+        Philadelphia presents a compelling setting: stark spatial disparities in socioeconomic
+        conditions are well-documented across its metropolitan area, making it a natural
+        laboratory for hedonic pricing analysis. The dataset was cleaned from 1,816 to
+        <em>1,720 block groups</em> by removing underpopulated areas, blocks with no housing
+        units, and one anomalous outlier in North Philadelphia with implausibly high house
+        values relative to extremely low household income.
+      </p>
+      <p>
+        Following hedonic pricing theory — which posits that house prices bundle structural,
+        locational, and neighbourhood-level attributes — the model regresses log-transformed
+        median house value (LNMEDHVAL) on four neighbourhood predictors: vacancy rate,
+        single-family housing share, educational attainment, and log poverty count.
+        All statistical analysis was conducted in <em>R</em>; choropleth maps were produced
+        in <em>GeoDa</em>.
+      </p>
+    </div>
+  </section>
+
+  <!-- Model -->
+  <section id="model">
+    <p class="section-label">Model</p>
+    <div class="reveal">
+      <p class="equation-label">OLS Regression Equation</p>
+      <div class="equation-block">
+        LNMEDHVAL = 11.114 &minus; 0.019(PCTVACANT) + 0.003(PCTSINGLES) + 0.021(PCTBACHMOR) &minus; 0.079(LNNBELPOV100)
+      </div>
+      <div class="stat-chips">
+        <div class="stat-chip">
+          <span class="stat-chip-label">R²</span>
+          <span class="stat-chip-value">0.6623</span>
+        </div>
+        <div class="stat-chip">
+          <span class="stat-chip-label">Adj. R²</span>
+          <span class="stat-chip-value">0.6615</span>
+        </div>
+        <div class="stat-chip">
+          <span class="stat-chip-label">F-statistic</span>
+          <span class="stat-chip-value">840.9</span>
+        </div>
+        <div class="stat-chip">
+          <span class="stat-chip-label">Observations</span>
+          <span class="stat-chip-value">1,720</span>
+        </div>
+        <div class="stat-chip">
+          <span class="stat-chip-label">p-value</span>
+          <span class="stat-chip-value">&lt; 0.001</span>
+        </div>
+        <div class="stat-chip">
+          <span class="stat-chip-label">Cross-val RMSE</span>
+          <span class="stat-chip-value">0.3664</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Findings -->
+  <section id="findings">
+    <p class="section-label">Findings</p>
+    <ul class="findings-list">
+
+      <li class="finding-item reveal">
+        <div class="finding-coeff pos">β = +0.021</div>
+        <div class="finding-info">
+          <p class="finding-title">Educational Attainment (PCTBACHMOR)</p>
+          <p class="finding-desc">
+            The strongest positive predictor. A one percentage point increase in the share of
+            residents holding a bachelor's degree or higher is associated with a
+            <em>2.09% increase</em> in median house value, holding all else constant. Reflects
+            the well-documented relationship between neighbourhood human capital and housing demand.
+          </p>
+          <span class="finding-tag">Strongest positive effect</span>
+        </div>
+      </li>
+
+      <li class="finding-item reveal">
+        <div class="finding-coeff neg">β = −0.019</div>
+        <div class="finding-info">
+          <p class="finding-title">Vacancy Rate (PCTVACANT)</p>
+          <p class="finding-desc">
+            The largest negative predictor. Each additional percentage point of vacant housing
+            is associated with a <em>1.92% decrease</em> in median house value. High vacancy
+            signals disinvestment and neighbourhood decline — consistent with legacy-city
+            dynamics particularly evident in north-central Philadelphia.
+          </p>
+          <span class="finding-tag">Largest negative effect</span>
+        </div>
+      </li>
+
+      <li class="finding-item reveal">
+        <div class="finding-coeff neg">β = −0.079</div>
+        <div class="finding-info">
+          <p class="finding-title">Poverty Concentration (LNNBELPOV100)</p>
+          <p class="finding-desc">
+            Interpreted as an elasticity — since both the outcome and this predictor are
+            log-transformed, a <em>1% increase</em> in the number of households below the
+            poverty line is associated with a 0.079% decrease in median house value.
+            Aligns with hedonic pricing theory: areas with concentrated poverty command
+            lower property values.
+          </p>
+          <span class="finding-tag">Log-log elasticity</span>
+        </div>
+      </li>
+
+      <li class="finding-item reveal">
+        <div class="finding-coeff pos">β = +0.003</div>
+        <div class="finding-info">
+          <p class="finding-title">Single-Family Housing Share (PCTSINGLES)</p>
+          <p class="finding-desc">
+            A weak positive effect. Each percentage point increase in detached single-family
+            housing units is associated with a <em>0.30% increase</em> in median house value.
+            Less intuitive in a dense urban context, but may reflect the premium that
+            single-family homes command over multi-family typologies even within Philadelphia.
+          </p>
+          <span class="finding-tag">Weak positive effect</span>
+        </div>
+      </li>
+
+    </ul>
+  </section>
+
+  <!-- Figures -->
+  <section id="figures">
+    <p class="section-label">Figures</p>
+    <div class="figures-grid">
+
+      <div class="figure-card reveal">
+        <p class="figure-label">Fig 1 &amp; 2 — Histograms</p>
+        <div class="figure-img-wrap">
+          <img src="figures/fig-histograms.png" alt="Histograms of untransformed and log-transformed variables">
+        </div>
+        <p class="figure-caption">
+          Untransformed variables (top) show pronounced right skew. Log transformation of
+          MEDHVAL produces an approximately normal distribution centred around 11,
+          justifying its use as the dependent variable.
+        </p>
+      </div>
+
+      <div class="figure-card reveal">
+        <p class="figure-label">Fig 3 — Scatter Plots</p>
+        <div class="figure-img-wrap">
+          <img src="figures/fig-scatter.png" alt="Scatter plots of LNMEDHVAL against each predictor">
+        </div>
+        <p class="figure-caption">
+          PCTBACHMOR exhibits the most visibly linear relationship with LNMEDHVAL.
+          PCTVACANT and LNNBELPOV100 show non-linear patterns — a potential violation
+          of the linearity assumption revisited in the limitations section.
+        </p>
+      </div>
+
+      <div class="figure-card reveal">
+        <p class="figure-label">Fig 4 &amp; 5 — Choropleth Maps</p>
+        <div class="figure-img-wrap">
+          <img src="figures/fig-choropleth.png" alt="Choropleth maps of LNMEDHVAL and predictor variables across Philadelphia block groups">
+        </div>
+        <p class="figure-caption">
+          Clear spatial clustering: highest house values in the northwest and northeast;
+          lowest in north-central Philadelphia where vacancy and poverty are most concentrated.
+          The mirrored spatial distributions suggest positive spatial autocorrelation.
+        </p>
+      </div>
+
+      <div class="figure-card reveal">
+        <p class="figure-label">Fig 8 &amp; 9 — Residual Diagnostics</p>
+        <div class="figure-img-wrap">
+          <img src="figures/fig-residuals.png" alt="Histogram of standardized residuals and residuals vs predicted values plot">
+        </div>
+        <p class="figure-caption">
+          The residual histogram is approximately bell-shaped, supporting the normality
+          assumption. The residuals-vs-fitted plot shows mild heteroscedasticity — wider
+          spread at lower predicted values — and several extreme outliers beyond ±3.
+        </p>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Limitations -->
+  <section id="limitations">
+    <p class="section-label">Limitations</p>
+    <ul class="limitations-list reveal">
+      <li class="limitation-item">
+        <span class="limitation-num">01</span>
+        <p class="limitation-text">
+          <em>Non-linearity.</em> Scatter plots of PCTVACANT and LNNBELPOV100 against
+          LNMEDHVAL show non-linear patterns, indicating a partial violation of the OLS
+          linearity assumption. Polynomial or spatial regression methods may be more appropriate.
+        </p>
+      </li>
+      <li class="limitation-item">
+        <span class="limitation-num">02</span>
+        <p class="limitation-text">
+          <em>Spatial autocorrelation.</em> Choropleth maps of both the dependent variable
+          and predictors show clear geographic clustering, suggesting that nearby block groups
+          share unmeasured characteristics. This likely violates the OLS independence-of-observations
+          assumption and calls for spatial regression techniques (e.g. spatial lag or spatial error models).
+        </p>
+      </li>
+      <li class="limitation-item">
+        <span class="limitation-num">03</span>
+        <p class="limitation-text">
+          <em>Mild heteroscedasticity.</em> Residual variance appears somewhat wider at lower
+          fitted values, which can produce inefficient coefficient estimates and unreliable
+          standard errors. Future work should explore robust standard errors or weighted regression.
+        </p>
+      </li>
+    </ul>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <a href="/home">← Back to portfolio</a>
+    <a class="footer-pdf" href="philadelphia-ols.pdf" download>Download full paper →</a>
+  </footer>
+
+  <script>
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.08 });
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+  </script>
+</body>
+</html>

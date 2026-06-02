@@ -81,8 +81,29 @@
 
     /* ── Hero ── */
     .hero {
+      position: relative;
+      overflow: hidden;
       padding: 10rem 2.5rem 5rem;
-      max-width: 860px;
+      background: var(--bg);
+    }
+    .hero-map {
+      position: absolute;
+      top: 0; right: 0;
+      height: 100%;
+      width: 55%;
+      object-fit: cover;
+      object-position: center;
+      filter: invert(1);
+      opacity: 0.18;
+      mask-image: linear-gradient(to left, rgba(0,0,0,0.6) 0%, transparent 100%);
+      -webkit-mask-image: linear-gradient(to left, rgba(0,0,0,0.6) 0%, transparent 100%);
+      pointer-events: none;
+      user-select: none;
+    }
+    .hero-content {
+      position: relative;
+      z-index: 1;
+      max-width: 680px;
     }
     .hero-eyebrow {
       font-family: var(--font-mono);
@@ -362,6 +383,8 @@
 
   <!-- Hero -->
   <div class="hero">
+    <img class="hero-map" src="figures/fig-choropleth-hero.png" alt="" aria-hidden="true">
+    <div class="hero-content">
     <p class="hero-eyebrow">Research · Spatial Econometrics</p>
     <h1 class="hero-title">Predicting Median House<br>Values in Philadelphia</h1>
     <p class="hero-sub">
@@ -373,6 +396,7 @@
       <span>R + GeoDa</span>
       <span>1,720 block groups</span>
       <span>Spatial Econometrics & Data</span>
+    </div>
     </div>
   </div>
 

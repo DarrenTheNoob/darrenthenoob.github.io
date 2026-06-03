@@ -164,12 +164,6 @@
     }
 
     /* ── Overview ── */
-    .overview-layout {
-      display: grid;
-      grid-template-columns: 160px 1fr;
-      gap: 0 3rem;
-      align-items: start;
-    }
     .prose p {
       font-size: 0.9rem;
       font-weight: 300;
@@ -365,7 +359,6 @@
       .nav-logo { display: none; }
       .hero { padding: 7rem 1.25rem 3.5rem; }
       section { padding: 3rem 1.25rem; }
-      .overview-layout { grid-template-columns: 1fr; }
       .figures-grid { grid-template-columns: 1fr; }
       .finding-item { grid-template-columns: 5rem 1fr; }
       .equation-block { font-size: 0.62rem; padding: 1rem 1.25rem; }
@@ -409,7 +402,6 @@
 
   <!-- Overview -->
   <section id="overview">
-    <div class="overview-layout">
     <p class="section-label">Overview</p>
     <div class="prose reveal">
       <p>
@@ -435,7 +427,6 @@
         All statistical analysis was conducted in <em>R</em>; choropleth maps were produced
         in <em>GeoDa</em>.
       </p>
-    </div>
     </div>
   </section>
 

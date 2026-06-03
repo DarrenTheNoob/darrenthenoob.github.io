@@ -83,7 +83,7 @@
     .hero {
       position: relative;
       overflow: hidden;
-      padding: 10rem 2.5rem 5rem;
+      padding: 10rem 2.5rem 3rem;
       background: var(--bg);
     }
     .hero-map {
@@ -95,8 +95,8 @@
       object-position: center;
       filter: invert(1);
       opacity: 1;
-      mask-image: linear-gradient(to left, black 30%, transparent 80%);
-      -webkit-mask-image: linear-gradient(to left, black 30%, transparent 80%);
+      mask-image: linear-gradient(to left, black 50%, transparent 85%);
+      -webkit-mask-image: linear-gradient(to left, black 50%, transparent 85%);
       pointer-events: none;
       user-select: none;
     }
@@ -164,12 +164,17 @@
     }
 
     /* ── Overview ── */
+    .overview-layout {
+      display: grid;
+      grid-template-columns: 160px 1fr;
+      gap: 0 3rem;
+      align-items: start;
+    }
     .prose p {
       font-size: 0.975rem;
       font-weight: 300;
       color: var(--muted);
       line-height: 1.85;
-      max-width: 720px;
       margin-bottom: 1.1rem;
     }
     .prose p:last-child { margin-bottom: 0; }
@@ -360,6 +365,7 @@
       .nav-logo { display: none; }
       .hero { padding: 7rem 1.25rem 3.5rem; }
       section { padding: 3rem 1.25rem; }
+      .overview-layout { grid-template-columns: 1fr; }
       .figures-grid { grid-template-columns: 1fr; }
       .finding-item { grid-template-columns: 5rem 1fr; }
       .equation-block { font-size: 0.62rem; padding: 1rem 1.25rem; }
@@ -403,6 +409,7 @@
 
   <!-- Overview -->
   <section id="overview">
+    <div class="overview-layout">
     <p class="section-label">Overview</p>
     <div class="prose reveal">
       <p>
@@ -428,6 +435,7 @@
         All statistical analysis was conducted in <em>R</em>; choropleth maps were produced
         in <em>GeoDa</em>.
       </p>
+    </div>
     </div>
   </section>
 

@@ -293,8 +293,12 @@
 
     /* ── Responsive ── */
     @media (max-width: 768px) {
-      nav { padding: 1rem 1.25rem; }
+      nav { padding: 1rem 1.25rem; justify-content: flex-end; gap: 1.5rem; }
+      .nav-back { order: 2; }
+      .nav-right { order: 1; }
+      .nav-logo { display: none; }
       .hero { padding: 0 1.25rem 3rem; }
+      .hero-img { object-position: center bottom; }
       .mood-hint { display: none; }
       section { padding: 3.5rem 1.25rem; }
       .series-item { grid-template-columns: 2.5rem 1fr auto; }

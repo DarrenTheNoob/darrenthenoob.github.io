@@ -2,9 +2,168 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta http-equiv="refresh" content="0; url=/home/" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Darren Marcus Loo</title>
-  <script>location.replace('/home/')</script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg:     #0e0e0c;
+      --text:   #e8e3d8;
+      --muted:  #6b6860;
+      --accent: #3a8c5c;
+      --border: #242420;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body {
+      width: 100%; height: 100%;
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Syne', sans-serif;
+      overflow: hidden;
+    }
+
+    /* ── Stage ── */
+    .stage {
+      width: 100vw;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 0 2.5rem;
+    }
+
+    /* ── Eyebrow ── */
+    .eyebrow-wrap { overflow: hidden; margin-bottom: 1.5rem; }
+    .eyebrow {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.75rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--accent);
+      opacity: 0;
+      transform: translateY(100%);
+    }
+
+    /* ── Name lines ── */
+    .line-wrap { overflow: hidden; }
+    .line-wrap + .line-wrap { margin-top: -0.06em; }
+
+    .name-line {
+      display: block;
+      font-size: clamp(4rem, 12vw, 10rem);
+      font-weight: 800;
+      line-height: 0.92;
+      letter-spacing: -0.03em;
+      color: var(--text);
+      opacity: 0;
+      transform: translateY(110%);
+    }
+
+    /* ── Divider ── */
+    .divider {
+      width: 0;
+      height: 1px;
+      background: var(--border);
+      margin: 2.5rem 0;
+    }
+
+    /* ── Enter ── */
+    .enter-wrap { overflow: hidden; }
+    .enter-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.75rem;
+      font-family: 'DM Mono', monospace;
+      font-size: 0.78rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--muted);
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 0;
+      opacity: 0;
+      transform: translateY(100%);
+      transition: color 0.2s;
+    }
+    .enter-btn:hover { color: var(--text); }
+    .enter-btn:hover .enter-arrow { transform: translateX(5px); }
+    .enter-arrow {
+      display: inline-block;
+      transition: transform 0.2s;
+    }
+
+    /* ── Outro overlay ── */
+    .outro {
+      position: fixed;
+      inset: 0;
+      background: var(--bg);
+      pointer-events: none;
+      opacity: 0;
+      z-index: 99;
+    }
+
+    /* ── Responsive ── */
+    @media (max-width: 768px) {
+      .stage { padding: 0 1.25rem; }
+      .name-line { letter-spacing: -0.02em; }
+      .divider { margin: 2rem 0; }
+    }
+  </style>
 </head>
-<body></body>
+<body>
+
+  <div class="stage" id="stage">
+    <div class="eyebrow-wrap">
+      <span class="eyebrow">Portfolio · 2025</span>
+    </div>
+
+    <div class="line-wrap"><span class="name-line" id="l1">Darren</span></div>
+    <div class="line-wrap"><span class="name-line" id="l2">Marcus</span></div>
+    <div class="line-wrap"><span class="name-line" id="l3">Loo.</span></div>
+
+    <div class="divider" id="divider"></div>
+
+    <div class="enter-wrap">
+      <button class="enter-btn" id="enterBtn" aria-label="Enter portfolio">
+        Enter
+        <span class="enter-arrow">→</span>
+      </button>
+    </div>
+  </div>
+
+  <div class="outro" id="outro"></div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script>
+    const tl = gsap.timeline({ defaults: { ease: 'power3.out' } });
+
+    tl
+      // Eyebrow
+      .to('.eyebrow', { opacity: 1, y: 0, duration: 0.7 }, 0.2)
+
+      // Name lines staggered
+      .to('#l1', { opacity: 1, y: 0, duration: 0.8 }, 0.45)
+      .to('#l2', { opacity: 1, y: 0, duration: 0.8 }, 0.62)
+      .to('#l3', { opacity: 1, y: 0, duration: 0.8 }, 0.79)
+
+      // Divider line grows
+      .to('#divider', { width: '3rem', duration: 0.6, ease: 'power2.out' }, 1.1)
+
+      // Enter button rises
+      .to('.enter-btn', { opacity: 1, y: 0, duration: 0.6 }, 1.3);
+
+    // Enter click → fade out → navigate
+    document.getElementById('enterBtn').addEventListener('click', () => {
+      gsap.to('#outro', {
+        opacity: 1,
+        duration: 0.55,
+        ease: 'power2.inOut',
+        onComplete: () => { window.location.href = '/home/'; }
+      });
+    });
+  </script>
+</body>
 </html>
